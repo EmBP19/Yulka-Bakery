@@ -12,19 +12,31 @@
             margin: auto;
             background-color: rgba(251, 245, 231, 255);
         }
-        select, input {
+        select, input, .quantity-container {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: rgba(87,56,27,255);
+        .quantity-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button, .quantity-btn {
+            padding: 15px;
+            background-color: #25D366;
             color: white;
             border: none;
             font-size: 16px;
             cursor: pointer;
+        }
+        .quantity-btn {
+            width: 50px;
+        }
+        .quantity-display {
+            flex: 1;
+            text-align: center;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -39,18 +51,36 @@
             <option value="Producto 3">Producto 3</option>
         </select>
         <label for="quantity">Cantidad:</label>
-        <input type="number" id="quantity" min="1" required>
+        <div class="quantity-container">
+            <button type="button" class="quantity-btn" id="decrease">-</button>
+            <div id="quantity" class="quantity-display">1</div>
+            <button type="button" class="quantity-btn" id="increase">+</button>
+        </div>
         <button type="submit">Continuar</button>
     </form>
 
     <script>
+        document.getElementById('increase').addEventListener('click', function() {
+            const quantityDisplay = document.getElementById('quantity');
+            let currentQuantity = parseInt(quantityDisplay.textContent);
+            quantityDisplay.textContent = currentQuantity + 1;
+        });
+
+        document.getElementById('decrease').addEventListener('click', function() {
+            const quantityDisplay = document.getElementById('quantity');
+            let currentQuantity = parseInt(quantityDisplay.textContent);
+            if (currentQuantity > 1) {
+                quantityDisplay.textContent = currentQuantity - 1;
+            }
+        });
+
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
             const item = document.getElementById('item').value;
-            const quantity = document.getElementById('quantity').value;
+            const quantity = document.getElementById('quantity').textContent;
             const message = `Hola, quiero ordenar: \n\nItem: ${item}\nCantidad: ${quantity}`;
-            const whatsappUrl = `https://wa.me/4151018847?text=${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
 
             window.location.href = whatsappUrl;
         });
