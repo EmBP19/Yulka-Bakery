@@ -72,9 +72,9 @@
     <h1>Ordenar Productos</h1>
     <form id="orderForm">
         <div id="itemsContainer">
-            <div class="item-container">
+            <div class="item-container" id="itemContainer0">
                 <label for="item0">Selecciona un ítem:</label>
-                <select class="item" id="item0" required>
+                <select class="item" id="item0" required onchange="updateTotal(0)">
                     <option value="" data-price="0">Selecciona un producto</option>
                     <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
                     <option value="Mini dona" data-price="10">Mini dona - $10</option>
@@ -94,11 +94,11 @@
                 </select>
                 <label for="quantity0">Cantidad:</label>
                 <div class="quantity-container">
-                    <button type="button" class="quantity-btn" data-id="0" onclick="decreaseQuantity(0)">-</button>
-                    <div id="quantity0" class="quantity-display" data-id="0">1</div>
-                    <button type="button" class="quantity-btn" data-id="0" onclick="increaseQuantity(0)">+</button>
+                    <button type="button" class="quantity-btn" onclick="decreaseQuantity(0)">-</button>
+                    <div id="quantity0" class="quantity-display">1</div>
+                    <button type="button" class="quantity-btn" onclick="increaseQuantity(0)">+</button>
                 </div>
-                <div id="total0" class="total">Total: $25</div>
+                <div id="total0" class="total">Total: $0</div>
             </div>
         </div>
         <button type="button" onclick="addItem()">Agregar otro ítem</button>
@@ -140,9 +140,10 @@
             const itemsContainer = document.getElementById('itemsContainer');
             const newItemContainer = document.createElement('div');
             newItemContainer.className = 'item-container';
+            newItemContainer.id = 'itemContainer' + itemCounter;
             newItemContainer.innerHTML = `
                 <label for="item${itemCounter}">Selecciona un ítem:</label>
-                <select class="item" id="item${itemCounter}" required>
+                <select class="item" id="item${itemCounter}" required onchange="updateTotal(${itemCounter})">
                     <option value="" data-price="0">Selecciona un producto</option>
                     <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
                     <option value="Mini dona" data-price="10">Mini dona - $10</option>
@@ -162,6 +163,12 @@
                 </select>
                 <label for="quantity${itemCounter}">Cantidad:</label>
                 <div class="quantity-container">
-                    <button type="button" class="quantity-btn" data-id="${itemCounter}" onclick="decreaseQuantity(${itemCounter})">-</button>
-                    <div id="quantity${itemCounter}" class="quantity-display" data-id="${itemCounter}">1</div>
-                    <button type="button" class="quantity-btn" data-id="${itemCounter}" onclick="increaseQuantity(${itemCounter})">
+                    <button type="button" class="quantity-btn" onclick="decreaseQuantity(${itemCounter})">-</button>
+                    <div id="quantity${itemCounter}" class="quantity-display">1</div>
+                    <button type="button" class="quantity-btn" onclick="increaseQuantity(${itemCounter})">+</button>
+                </div>
+                <div id="total${itemCounter}" class="total">Total: $0</div>
+            `;
+            itemsContainer.appendChild(newItemContainer);
+            itemCounter++;
+}
