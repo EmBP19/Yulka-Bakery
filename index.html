@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda</title>
+    <title>Yulka Bakery</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -53,7 +53,6 @@
             <div id="itemsContainer">
                 <div class="item-container" id="itemContainer0">
                     <div class="form-group">
-                        <label for="item0">Selecciona un ítem:</label>
                         <select class="form-control" id="item0" required onchange="updateTotal(0)">
                             <option value="" data-price="0">Selecciona un producto</option>
                             <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
@@ -78,13 +77,15 @@
                         <div class="quantity-container">
                             <button type="button" class="quantity-btn" onclick="decreaseQuantity(0)">-</button>
                             <div id="quantity0" class="quantity-display">1</div>
-                            <button type="button" class="quantity-btn" onclick="increaseQuantity(0)">+</button>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"  onclick="increaseQuantity(0)">
+                                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
+                              </svg>                              
                         </div>
                     </div>
                     <div id="total0" class="total">Total: $0</div>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary btn-block" onclick="addItem()">Agregar otro ítem</button>
+            <button type="button" class="btn btn-secondary btn-block" onclick="addItem()">Agregar otro producto</button>
             <button type="submit" class="btn btn-primary btn-block mt-3">Continuar</button>
         </form>
     </div>
