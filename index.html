@@ -65,7 +65,7 @@
 </head>
 <body>
     <h1>Ordenar Productos</h1>
-    <form id="orderForm">
+    <form id="orderForm" onsubmit="sendOrder(event)">
         <div id="itemsContainer">
             <div class="item-container" id="itemContainer0">
                 <label for="item0">Selecciona un ítem:</label>
@@ -168,16 +168,23 @@
             itemCounter++;
         }
 
-        document.getElementById('orderForm').addEventListener('submit', function(event) {
+        function sendOrder(event) {
             event.preventDefault();
+            const items = document.getElementsByClassName('item');
+            const quantities = document.getElementsByClassName('quantity-display');
+            let orderMessage = 'Hola, quisiera ordenar:\n';
 
-            const item = document.getElementById('item').value;
-            const quantity = document.getElementById('quantity').textContent;
-            const message = `Hola, quiero ordenar: \n\nItem: ${item}\nCantidad: ${quantity}`;
-            const whatsappUrl = `https://wa.me/4151018847?text=${encodeURIComponent(message)}`;
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                const quantity = quantities[i];
+                if (item.value) {
+                    orderMessage += `${item.value} - Cantidad: ${quantity.textContent}\n`;
+                }
+            }
 
+            const whatsappUrl = `https://wa.me/524151018847?text=${encodeURIComponent(orderMessage)}`;
             window.location.href = whatsappUrl;
-        })
+        }
     </script>
 </body>
 </html>
