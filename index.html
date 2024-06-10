@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,44 +13,26 @@
             margin: auto;
             background-color: rgba(251, 245, 231, 255);
         }
-        select, .quantity-container, .total, label {
-            width: 100%;
-            margin: 10px 0;
-            display: block;
-        }
-        select {
-            padding: 10px;
-            font-size: 14px;
-        }
         .quantity-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .quantity-btn, button {
-            padding: 10px;
-            background-color: rgba(87, 56, 27, 255);
-            color: white;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
         }
         .quantity-btn {
             width: 40px;
             height: 40px;
             font-size: 20px;
             line-height: 20px;
+            background-color: rgba(87, 56, 27, 255);
+            color: white;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
         }
         .quantity-display {
             flex: 1;
             text-align: center;
             font-size: 18px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            margin-top: 20px;
         }
         .total {
             font-size: 18px;
@@ -64,41 +47,47 @@
     </style>
 </head>
 <body>
-    <h1>Ordenar Productos</h1>
-    <form id="orderForm" onsubmit="sendOrder(event)">
-        <div id="itemsContainer">
-            <div class="item-container" id="itemContainer0">
-                <label for="item0">Selecciona un ítem:</label>
-                <select class="item" id="item0" required onchange="updateTotal(0)">
-                    <option value="" data-price="0">Selecciona un producto</option>
-                    <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
-                    <option value="Mini dona" data-price="10">Mini dona - $10</option>
-                    <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
-                    <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
-                    <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
-                    <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
-                    <option value="Bigote" data-price="20">Bigote - $20</option>
-                    <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
-                    <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
-                    <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
-                    <option value="Mini concha" data-price="10">Mini concha - $10</option>
-                    <option value="Berlini" data-price="20">Berlini - $20</option>
-                    <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
-                    <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
-                    <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
-                </select>
-                <label for="quantity0">Cantidad:</label>
-                <div class="quantity-container">
-                    <button type="button" class="quantity-btn" onclick="decreaseQuantity(0)">-</button>
-                    <div id="quantity0" class="quantity-display">1</div>
-                    <button type="button" class="quantity-btn" onclick="increaseQuantity(0)">+</button>
+    <div class="container">
+        <h1 class="text-center">Ordenar Productos</h1>
+        <form id="orderForm" onsubmit="sendOrder(event)">
+            <div id="itemsContainer">
+                <div class="item-container" id="itemContainer0">
+                    <div class="form-group">
+                        <label for="item0">Selecciona un ítem:</label>
+                        <select class="form-control" id="item0" required onchange="updateTotal(0)">
+                            <option value="" data-price="0">Selecciona un producto</option>
+                            <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
+                            <option value="Mini dona" data-price="10">Mini dona - $10</option>
+                            <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
+                            <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
+                            <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
+                            <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
+                            <option value="Bigote" data-price="20">Bigote - $20</option>
+                            <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
+                            <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
+                            <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
+                            <option value="Mini concha" data-price="10">Mini concha - $10</option>
+                            <option value="Berlini" data-price="20">Berlini - $20</option>
+                            <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
+                            <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
+                            <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity0">Cantidad:</label>
+                        <div class="quantity-container">
+                            <button type="button" class="quantity-btn" onclick="decreaseQuantity(0)">-</button>
+                            <div id="quantity0" class="quantity-display">1</div>
+                            <button type="button" class="quantity-btn" onclick="increaseQuantity(0)">+</button>
+                        </div>
+                    </div>
+                    <div id="total0" class="total">Total: $0</div>
                 </div>
-                <div id="total0" class="total">Total: $0</div>
             </div>
-        </div>
-        <button type="button" onclick="addItem()">Agregar otro ítem</button>
-        <button type="submit">Continuar</button>
-    </form>
+            <button type="button" class="btn btn-secondary btn-block" onclick="addItem()">Agregar otro ítem</button>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Continuar</button>
+        </form>
+    </div>
 
     <script>
         let itemCounter = 1;
@@ -137,30 +126,34 @@
             newItemContainer.className = 'item-container';
             newItemContainer.id = 'itemContainer' + itemCounter;
             newItemContainer.innerHTML = `
-                <label for="item${itemCounter}">Selecciona un ítem:</label>
-                <select class="item" id="item${itemCounter}" required onchange="updateTotal(${itemCounter})">
-                    <option value="" data-price="0">Selecciona un producto</option>
-                    <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
-                    <option value="Mini dona" data-price="10">Mini dona - $10</option>
-                    <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
-                    <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
-                    <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
-                    <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
-                    <option value="Bigote" data-price="20">Bigote - $20</option>
-                    <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
-                    <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
-                    <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
-                    <option value="Mini concha" data-price="10">Mini concha - $10</option>
-                    <option value="Berlini" data-price="20">Berlini - $20</option>
-                    <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
-                    <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
-                    <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
-                </select>
-                <label for="quantity${itemCounter}">Cantidad:</label>
-                <div class="quantity-container">
-                    <button type="button" class="quantity-btn" onclick="decreaseQuantity(${itemCounter})">-</button>
-                    <div id="quantity${itemCounter}" class="quantity-display">1</div>
-                    <button type="button" class="quantity-btn" onclick="increaseQuantity(${itemCounter})">+</button>
+                <div class="form-group">
+                    <label for="item${itemCounter}">Selecciona un ítem:</label>
+                    <select class="form-control" id="item${itemCounter}" required onchange="updateTotal(${itemCounter})">
+                        <option value="" data-price="0">Selecciona un producto</option>
+                        <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
+                        <option value="Mini dona" data-price="10">Mini dona - $10</option>
+                        <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
+                        <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
+                        <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
+                        <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
+                        <option value="Bigote" data-price="20">Bigote - $20</option>
+                        <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
+                        <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
+                        <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
+                        <option value="Mini concha" data-price="10">Mini concha - $10</option>
+                        <option value="Berlini" data-price="20">Berlini - $20</option>
+                        <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
+                        <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
+                        <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity${itemCounter}">Cantidad:</label>
+                    <div class="quantity-container">
+                        <button type="button" class="quantity-btn" onclick="decreaseQuantity(${itemCounter})">-</button>
+                        <div id="quantity${itemCounter}" class="quantity-display">1</div>
+                        <button type="button" class="quantity-btn" onclick="increaseQuantity(${itemCounter})">+</button>
+                    </div>
                 </div>
                 <div id="total${itemCounter}" class="total">Total: $0</div>
             `;
@@ -170,15 +163,14 @@
 
         function sendOrder(event) {
             event.preventDefault();
-            const items = document.getElementsByClassName('item');
-            const quantities = document.getElementsByClassName('quantity-display');
+            const items = document.getElementsByClassName('item-container');
             let orderMessage = 'Hola, quisiera ordenar:\n';
 
             for (let i = 0; i < items.length; i++) {
-                const item = items[i];
-                const quantity = quantities[i];
-                if (item.value) {
-                    orderMessage += `${item.value} - Cantidad: ${quantity.textContent}\n`;
+                const itemSelect = items[i].querySelector('select');
+                const quantityDisplay = items[i].querySelector('.quantity-display');
+                if (itemSelect.value) {
+                    orderMessage += `${itemSelect.value} - Cantidad: ${quantityDisplay.textContent}\n`;
                 }
             }
 
