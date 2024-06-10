@@ -167,6 +167,17 @@
             itemsContainer.appendChild(newItemContainer);
             itemCounter++;
         }
+
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const item = document.getElementById('item').value;
+            const quantity = document.getElementById('quantity').textContent;
+            const message = `Hola, quiero ordenar: \n\nItem: ${item}\nCantidad: ${quantity}`;
+            const whatsappUrl = `https://wa.me/4151018847?text=${encodeURIComponent(message)}`;
+
+            window.location.href = whatsappUrl;
+        })
     </script>
 </body>
 </html>
