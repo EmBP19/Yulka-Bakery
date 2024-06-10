@@ -12,7 +12,7 @@
             margin: auto;
             background-color: rgba(251, 245, 231, 255);
         }
-        select, .quantity-container, label {
+        select, .quantity-container, .total, label {
             width: 100%;
             margin: 10px 0;
             display: block;
@@ -28,7 +28,7 @@
         }
         .quantity-btn, button {
             padding: 10px;
-            background-color: rgba(87,56,27,255);
+            background-color: rgba(87, 56, 27, 255);
             color: white;
             border: none;
             font-size: 14px;
@@ -51,64 +51,117 @@
             font-size: 16px;
             margin-top: 20px;
         }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+        }
+        .item-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .remove-item {
+            background-color: red;
+            font-size: 12px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Ordenar Productos</h1>
     <form id="orderForm">
-        <label for="item">Selecciona un ítem:</label>
-        <select id="item" required>
-            <option value="">Selecciona un producto</option>
-            <option value="Dona (Tamaño regular)">Dona (Tamaño regular) - $25</option>
-            <option value="Mini dona">Mini dona - $10</option>
-            <option value="Donuts bites (6 Bites)">Donuts bites (6 Bites) - $30</option>
-            <option value="Donuts bites (12 Bites)">Donuts bites (12 Bites) - $55</option>
-            <option value="Cuernito (Tamaño regular)">Cuernito (Tamaño regular) - $20</option>
-            <option value="Mini cuernito">Mini cuernito - $10</option>
-            <option value="Bigote">Bigote - $20</option>
-            <option value="Bigote YULKA Chocolate">Bigote YULKA Chocolate - $25</option>
-            <option value="Bigote YULKA Almendra">Bigote YULKA Almendra - $30</option>
-            <option value="Concha (Tamaño regular)">Concha (Tamaño regular) - $25</option>
-            <option value="Mini concha">Mini concha - $10</option>
-            <option value="Berlini">Berlini - $20</option>
-            <option value="Pan Pizza">Pan Pizza (5 piezas) - $60</option>
-            <option value="Bolas Yulka">Bolas Yulka (6 pz) - $40</option>
-            <option value="Burger bollos">Burger bollos (4 pz) - $60</option>
-        </select>
-        <label for="quantity">Cantidad:</label>
-        <div class="quantity-container">
-            <button type="button" class="quantity-btn" id="decrease">-</button>
-            <div id="quantity" class="quantity-display">1</div>
-            <button type="button" class="quantity-btn" id="increase">+</button>
+        <div id="itemsContainer">
+            <div class="item-container">
+                <label for="item0">Selecciona un ítem:</label>
+                <select class="item" id="item0" required>
+                    <option value="" data-price="0">Selecciona un producto</option>
+                    <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
+                    <option value="Mini dona" data-price="10">Mini dona - $10</option>
+                    <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
+                    <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
+                    <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
+                    <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
+                    <option value="Bigote" data-price="20">Bigote - $20</option>
+                    <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
+                    <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
+                    <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
+                    <option value="Mini concha" data-price="10">Mini concha - $10</option>
+                    <option value="Berlini" data-price="20">Berlini - $20</option>
+                    <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
+                    <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
+                    <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
+                </select>
+                <label for="quantity0">Cantidad:</label>
+                <div class="quantity-container">
+                    <button type="button" class="quantity-btn" data-id="0" onclick="decreaseQuantity(0)">-</button>
+                    <div id="quantity0" class="quantity-display" data-id="0">1</div>
+                    <button type="button" class="quantity-btn" data-id="0" onclick="increaseQuantity(0)">+</button>
+                </div>
+                <div id="total0" class="total">Total: $25</div>
+            </div>
         </div>
+        <button type="button" onclick="addItem()">Agregar otro ítem</button>
         <button type="submit">Continuar</button>
     </form>
 
     <script>
-        document.getElementById('increase').addEventListener('click', function() {
-            const quantityDisplay = document.getElementById('quantity');
+        let itemCounter = 1;
+
+        function updateTotal(id) {
+            const itemSelect = document.getElementById('item' + id);
+            const quantityDisplay = document.getElementById('quantity' + id);
+            const totalDisplay = document.getElementById('total' + id);
+
+            const price = parseFloat(itemSelect.options[itemSelect.selectedIndex].getAttribute('data-price'));
+            const quantity = parseInt(quantityDisplay.textContent);
+
+            const total = price * quantity;
+            totalDisplay.textContent = 'Total: $' + total;
+        }
+
+        function increaseQuantity(id) {
+            const quantityDisplay = document.getElementById('quantity' + id);
             let currentQuantity = parseInt(quantityDisplay.textContent);
             quantityDisplay.textContent = currentQuantity + 1;
-        });
+            updateTotal(id);
+        }
 
-        document.getElementById('decrease').addEventListener('click', function() {
-            const quantityDisplay = document.getElementById('quantity');
+        function decreaseQuantity(id) {
+            const quantityDisplay = document.getElementById('quantity' + id);
             let currentQuantity = parseInt(quantityDisplay.textContent);
             if (currentQuantity > 1) {
                 quantityDisplay.textContent = currentQuantity - 1;
+                updateTotal(id);
             }
-        });
+        }
 
-        document.getElementById('orderForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const item = document.getElementById('item').value;
-            const quantity = document.getElementById('quantity').textContent;
-            const message = `Hola, quiero ordenar: \n\nItem: ${item}\nCantidad: ${quantity}`;
-            const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
-
-            window.location.href = whatsappUrl;
-        });
-    </script>
-</body>
-</html>
+        function addItem() {
+            const itemsContainer = document.getElementById('itemsContainer');
+            const newItemContainer = document.createElement('div');
+            newItemContainer.className = 'item-container';
+            newItemContainer.innerHTML = `
+                <label for="item${itemCounter}">Selecciona un ítem:</label>
+                <select class="item" id="item${itemCounter}" required>
+                    <option value="" data-price="0">Selecciona un producto</option>
+                    <option value="Dona (Tamaño regular)" data-price="25">Dona (Tamaño regular) - $25</option>
+                    <option value="Mini dona" data-price="10">Mini dona - $10</option>
+                    <option value="Donuts bites (6 Bites)" data-price="30">Donuts bites (6 Bites) - $30</option>
+                    <option value="Donuts bites (12 Bites)" data-price="55">Donuts bites (12 Bites) - $55</option>
+                    <option value="Cuernito (Tamaño regular)" data-price="20">Cuernito (Tamaño regular) - $20</option>
+                    <option value="Mini cuernito" data-price="10">Mini cuernito - $10</option>
+                    <option value="Bigote" data-price="20">Bigote - $20</option>
+                    <option value="Bigote YULKA Chocolate" data-price="25">Bigote YULKA Chocolate - $25</option>
+                    <option value="Bigote YULKA Almendra" data-price="30">Bigote YULKA Almendra - $30</option>
+                    <option value="Concha (Tamaño regular)" data-price="25">Concha (Tamaño regular) - $25</option>
+                    <option value="Mini concha" data-price="10">Mini concha - $10</option>
+                    <option value="Berlini" data-price="20">Berlini - $20</option>
+                    <option value="Pan Pizza" data-price="60">Pan Pizza (5 piezas) - $60</option>
+                    <option value="Bolas Yulka" data-price="40">Bolas Yulka (6 pz) - $40</option>
+                    <option value="Burger bollos" data-price="60">Burger bollos (4 pz) - $60</option>
+                </select>
+                <label for="quantity${itemCounter}">Cantidad:</label>
+                <div class="quantity-container">
+                    <button type="button" class="quantity-btn" data-id="${itemCounter}" onclick="decreaseQuantity(${itemCounter})">-</button>
+                    <div id="quantity${itemCounter}" class="quantity-display" data-id="${itemCounter}">1</div>
+                    <button type="button" class="quantity-btn" data-id="${itemCounter}" onclick="increaseQuantity(${itemCounter})">
